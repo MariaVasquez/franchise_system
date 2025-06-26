@@ -40,6 +40,9 @@ jobs:
       - name: Análisis con SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2
         with:
-          projectBaseDir: .
+          args: >
+            -Dsonar.projectKey=MariaVasquez_franchise_system
+            -Dsonar.organization=mariavasquez
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
