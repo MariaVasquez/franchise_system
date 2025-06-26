@@ -44,5 +44,7 @@ jobs:
             -Dsonar.projectKey=MariaVasquez_franchise_system
             -Dsonar.organization=mariavasquez
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+            -X
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_SCANNER_OPTS: "-Xmx1024m"
