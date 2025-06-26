@@ -34,6 +34,9 @@ jobs:
       - name: Compilar, ejecutar pruebas y generar cobertura
         run: ./mvnw clean verify
 
+      - name: Verificar que existe el reporte JaCoCo
+        run: ls -la target/site/jacoco/
+
       - name: Análisis con SonarCloud
         uses: SonarSource/sonarcloud-github-action@v2
         with:
