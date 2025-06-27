@@ -17,6 +17,7 @@ module "network" {
   source = "./modules/network"
   vpc_id = var.vpc_id
   subnet_ids = var.subnet_ids
+  acm_certificate_arn = var.acm_certificate_arn
 }
 
 module "ecr" {

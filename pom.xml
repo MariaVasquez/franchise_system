@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.3</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.mariavasquez</groupId>
 	<artifactId>franchis.system</artifactId>
@@ -91,10 +91,23 @@
 			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
 			<version>2.5.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.5.5.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.5.5.Final</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -112,6 +125,11 @@
 						<path>
 							<groupId>org.springframework.boot</groupId>
 							<artifactId>spring-boot-configuration-processor</artifactId>
+						</path>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>1.5.5.Final</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -148,8 +166,26 @@
 						<configuration>
 							<outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
 							<formats>
+								<format>HTML</format>
 								<format>XML</format>
 							</formats>
+							<includes>
+								<include>com/mariavasquez/franchis/system/application/service/**</include>
+								<include>com/mariavasquez/franchis/system/infrastructure/web/controller/**</include>
+								<include>com/mariavasquez/franchis/system/infrastructure/r2dbc/service/**</include>
+							</includes>
+
+							<excludes>
+								<exclude>com/mariavasquez/franchis/system/config/**</exclude>
+								<exclude>com/mariavasquez/franchis/system/application/mapper/**</exclude>
+								<exclude>com/mariavasquez/franchis/system/domain/port/**</exclude>
+								<exclude>com/mariavasquez/franchis/system/domain/model/**</exclude>
+								<exclude>com/mariavasquez/franchis/system/infrastructure/web/dto/**</exclude>
+								<exclude>com/mariavasquez/franchis/system/infrastructure/web/handler/**</exclude>
+								<exclude>com/mariavasquez/franchis/system/infrastructure/r2dbc/repository/**</exclude>
+								<exclude>com/mariavasquez/franchis/system/infrastructure/r2dbc/entity/**</exclude>
+								<exclude>com/mariavasquez/franchis/system/Application*</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 				</executions>

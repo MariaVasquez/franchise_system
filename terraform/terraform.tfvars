@@ -1,9 +1,0 @@
-acm_certificate_arn = "arn:aws:acm:us-east-1:196257796246:certificate/9c8c9513-f84d-4c04-9dea-17e307f41f7f"
-subnet_ids = ["subnet-0b1da02df2c121a92", "subnet-0ea0c1e8ef8fd556c"]
-vpc_id = "vpc-080c088b47af4cdf6"
-ecs_task_execution_role_arn = "arn:aws:iam::196257796246:role/ecsTaskExecutionRole"
-db_url = "r2dbc:mysql://franchise-db.cgpa24aeemp2.us-east-1.rds.amazonaws.com/franchise"
-db_username = "adminfranchise"
-db_password = "admin_franchise"
-profile = "dev"
-ecr_repo_url = "196257796246.dkr.ecr.us-east-1.amazonaws.com/franchise-app"
