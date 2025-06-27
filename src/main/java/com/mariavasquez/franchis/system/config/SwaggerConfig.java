@@ -7,6 +7,8 @@ import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Configuration
 public class SwaggerConfig {
 
@@ -20,7 +22,7 @@ public class SwaggerConfig {
                         .title("Franchise System API")
                         .version("1.0.0")
                         .description("API para gestión de franquicias y productos")
-                );
+                ).servers(List.of(server));
     }
 
     @Bean
