@@ -40,3 +40,10 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
           docker push $ECR_REGISTRY/franchise-app:latest
+
+      - name: Actualización del servicio ECS
+        run: |
+          aws ecs update-service \
+            --cluster franchise-cluster \
+            --service franchise-service \
+            --force-new-deployment
