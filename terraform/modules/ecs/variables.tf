@@ -14,4 +14,3 @@ variable "db_url" {}
 variable "db_username" {}
 variable "db_password" {}
 variable "port" {}
-variable "profile" {}

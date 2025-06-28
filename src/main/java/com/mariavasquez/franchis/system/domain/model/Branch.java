@@ -5,16 +5,13 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Data
 @Builder
-public class Franchise {
+@Data
+public class Branch {
     private Long id;
     private String name;
-    private String description;
-    private String ownerName;
-    private String email;
-    private String phone;
     private String address;
+    private Long franchiseId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

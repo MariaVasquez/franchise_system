@@ -7,14 +7,11 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class FranchiseResponseDto {
+public class BranchResponseDto {
     private Long id;
     private String name;
-    private String description;
-    private String ownerName;
-    private String email;
-    private String phone;
     private String address;
+    private Long franchiseId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

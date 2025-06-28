@@ -44,5 +44,4 @@ module "ecs" {
   db_username   = var.db_username
   db_password   = var.db_password
   port          = var.container_port
-  profile       = var.profile
 }

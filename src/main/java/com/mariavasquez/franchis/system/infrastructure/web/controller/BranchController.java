@@ -1,8 +1,8 @@
 package com.mariavasquez.franchis.system.infrastructure.web.controller;
 
-import com.mariavasquez.franchis.system.application.usecase.interfaces.CreateFranchiseUseCase;
-import com.mariavasquez.franchis.system.infrastructure.web.dto.request.FranchiseRequestDto;
-import com.mariavasquez.franchis.system.infrastructure.web.dto.response.FranchiseResponseDto;
+import com.mariavasquez.franchis.system.application.usecase.interfaces.CreateBranchToFranchiseUseCase;
+import com.mariavasquez.franchis.system.infrastructure.web.dto.request.BranchRequestDto;
+import com.mariavasquez.franchis.system.infrastructure.web.dto.response.BranchResponseDto;
 import com.mariavasquez.franchis.system.shared.constants.ResponseCode;
 import com.mariavasquez.franchis.system.shared.dto.GenericResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,19 +20,19 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/franchises")
-@Tag(name = "Franquicias", description = "Operaciones relacionadas con franquicias")
-public class FranchiseController {
+@RequestMapping("/api/branches")
+@Tag(name = "Sucursales", description = "Operaciones relacionadas con sucursales")
+public class BranchController {
 
-    private final CreateFranchiseUseCase createFranchiseUseCase;
+    private final CreateBranchToFranchiseUseCase createBranchToFranchiseUseCase;
 
     @Operation(
-            summary = "Crear una nueva franquicia",
-            description = "Este endpoint permite registrar una nueva franquicia con sus datos principales.",
+            summary = "Crear una nueva sucursal",
+            description = "Este endpoint permite crear una nueva sucursal y asociarla a una franquicia existente.",
             responses = {
                     @ApiResponse(
-                            responseCode = "201",
-                            description = "Franquicia creada exitosamente",
+                            responseCode = "200",
+                            description = "Sucursal creada exitosamente",
                             content = @Content(schema = @Schema(implementation = GenericResponseDto.class))
                     ),
                     @ApiResponse(
@@ -43,17 +43,17 @@ public class FranchiseController {
             }
     )
     @PostMapping
-    public Mono<GenericResponseDto<FranchiseResponseDto>> createFranchise(
+    public Mono<GenericResponseDto<BranchResponseDto>> createFranchise(
             @org.springframework.web.bind.annotation.RequestBody
             @Valid
             @RequestBody(
-                    description = "Datos necesarios para registrar una franquicia",
+                    description = "Datos necesarios para crear una sucursal",
                     required = true,
-                    content = @Content(schema = @Schema(implementation = FranchiseRequestDto.class))
+                    content = @Content(schema = @Schema(implementation = BranchRequestDto.class))
             )
-            FranchiseRequestDto requestDto
+            BranchRequestDto requestDto
     ) {
-        return createFranchiseUseCase.execute(requestDto)
+        return createBranchToFranchiseUseCase.execute(requestDto)
                 .map(data -> new GenericResponseDto<>(ResponseCode.TRANSACTION_CREATED, data));
     }
 }

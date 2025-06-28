@@ -41,8 +41,8 @@ resource "aws_ecs_task_definition" "franchise_task" {
           value = var.db_password
         },
         {
-          name  = "PROFILE"
-          value = var.profile
+          name  = "SPRING_PROFILES_ACTIVE"
+          value = "prod"
         },
         {
           name  = "PORT"

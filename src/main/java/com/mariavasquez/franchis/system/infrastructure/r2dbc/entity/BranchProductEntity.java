@@ -12,18 +12,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table("franchises")
-public class FranchiseEntity {
-
+@Table("branch_products")
+public class BranchProductEntity {
     @Id
     private Long id;
 
-    private String name;
-    private String description;
-    private String ownerName;
-    private String email;
-    private String phone;
-    private String address;
+    private Long branchId;
+    private Long productId;
+    private Integer stock;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
