@@ -7,13 +7,13 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 @Table("product")
 public class ProductEntity {
     @Id
@@ -23,7 +23,7 @@ public class ProductEntity {
     private BigDecimal price;
 
     @Column("franchise_id")
-    private UUID franchiseId;
+    private Long franchiseId;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

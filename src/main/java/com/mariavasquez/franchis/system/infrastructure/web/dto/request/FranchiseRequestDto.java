@@ -3,7 +3,6 @@ package com.mariavasquez.franchis.system.infrastructure.web.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
@@ -33,8 +32,7 @@ public class FranchiseRequestDto {
     private String email;
 
     @NotBlank(message = "El número de teléfono es obligatorio")
-    @Pattern(regexp = "^[0-9\\-\\+]{7,15}$", message = "Número de teléfono no válido")
-    @Schema(description = "Número de teléfono de contacto", example = "+57 3001234567", required = true)
+    @Schema(description = "Número de teléfono de contacto", example = "3001234567", required = true)
     private String phone;
 
     @NotBlank(message = "La dirección es obligatoria")

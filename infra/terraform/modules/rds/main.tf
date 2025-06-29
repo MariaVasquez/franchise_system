@@ -17,7 +17,7 @@ resource "aws_db_instance" "franchise_db" {
   username                = var.db_username
   password                = var.db_password
   skip_final_snapshot     = true
-  publicly_accessible     = false
+  publicly_accessible     = true
   db_subnet_group_name    = aws_db_subnet_group.franchise_db_subnet_group.name
   vpc_security_group_ids = [var.franchise_db_sg_id]
   multi_az                = false

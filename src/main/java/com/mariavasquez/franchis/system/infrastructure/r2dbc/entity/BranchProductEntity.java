@@ -16,11 +16,9 @@ import java.util.UUID;
 public class BranchProductEntity {
     @Id
     private Long id;
-
     private Long branchId;
     private Long productId;
     private Integer stock;
-
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -12,6 +12,7 @@ import com.mariavasquez.franchis.system.shared.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ public class CreateBranchToFranchiseUseCaseImpl implements CreateBranchToFranchi
     private final BranchMapper branchMapper;
 
     @Override
+    @Transactional
     public Mono<BranchResponseDto> execute(BranchRequestDto branchRequestDto) {
         log.info("Init save branch to franchise {}", branchRequestDto.getName());
         Branch branch = branchMapper.toModel(branchRequestDto);
