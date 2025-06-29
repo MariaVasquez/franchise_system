@@ -8,24 +8,26 @@ El backend está diseñado siguiendo los principios de **Clean Architecture**, l
 
 ### 📦 Estructura de paquetes
 
+```text
 com.mariavasquez.franchis.system
 ├── application
-│ ├── mapper # Conversión entre entidades y DTOs
-│ └── usecase # Casos de uso (lógica de aplicación)
+│   ├── mapper              # Conversión entre entidades y DTOs
+│   └── usecase             # Casos de uso (lógica de aplicación)
 ├── config
-│ ├── CorsGlobalConfiguration
-│ └── SwaggerConfig # Configuración de CORS y Swagger
+│   ├── CorsGlobalConfiguration
+│   └── SwaggerConfig       # Configuración de CORS y Swagger
 ├── domain
-│ ├── model # Entidades del dominio
-│ └── port # Interfaces para la infraestructura (salientes)
+│   ├── model               # Entidades del dominio
+│   └── port                # Interfaces para la infraestructura (salientes)
 ├── infrastructure
-│ ├── r2dbc # Implementación R2DBC (repositorios reactivos)
-│ └── web # Controladores (adapters de entrada)
+│   ├── r2dbc               # Implementación R2DBC (repositorios reactivos)
+│   └── web                 # Controladores (adapters de entrada)
 ├── shared
-│ ├── constants
-│ ├── dto # Objetos de transferencia
-│ └── exception # Manejo de errores y respuestas
-└── Application # Clase principal de arranque
+│   ├── constants
+│   ├── dto                 # Objetos de transferencia
+│   └── exception           # Manejo de errores y respuestas
+└── Application             # Clase principal de arranque
+```
 
 ---
 
@@ -90,6 +92,7 @@ Todo el entorno fue construido con Terraform:
 
 ## 📂 Estructura General
 
+```text
 ├── app/
 │ ├── Dockerfile
 │ └── src/...
@@ -102,6 +105,7 @@ Todo el entorno fue construido con Terraform:
 │ └── ci-cd.yml
 ├── sonar-project.properties
 └── README.md
+```
 
 ---
 
