@@ -40,9 +40,9 @@ public class CreateFranchiseUseCaseImpl implements CreateFranchiseUseCase {
     private Mono<Void> validateNotExists(String name) {
         return franchiseRepository.findByName(name)
                 .hasElement()
-                .flatMap(exists -> {
-                    if (exists) return Mono.error(new CustomException(ResponseCode.FRANCHISE_EXIST, name));
-                    return Mono.empty();
-                });
+                .flatMap(exists -> Boolean.TRUE.equals(exists)
+                        ? Mono.error(new CustomException(ResponseCode.FRANCHISE_EXIST, name))
+                        : Mono.empty()
+                );
     }
 }

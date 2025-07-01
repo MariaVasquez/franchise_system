@@ -6,4 +6,5 @@ import reactor.core.publisher.Mono;
 public interface BranchRepository {
     Mono<Branch> save(Branch branch);
     Mono<Branch> findByName(String name);
+    Mono<Void> delete(Long id);
 }

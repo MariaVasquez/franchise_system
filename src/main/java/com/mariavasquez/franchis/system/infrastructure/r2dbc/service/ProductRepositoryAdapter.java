@@ -6,6 +6,7 @@ import com.mariavasquez.franchis.system.domain.port.ProductRepository;
 import com.mariavasquez.franchis.system.infrastructure.r2dbc.repository.ProductReactiveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
@@ -30,5 +31,22 @@ public class ProductRepositoryAdapter implements ProductRepository {
     public Mono<Product> findById(Long id) {
         return productReactiveRepository.findById(id)
                 .map(mapper::toDomain);
+    }
+
+    @Override
+    public Mono<Void> delete(Long id) {
+        return productReactiveRepository.deleteById(id);
+    }
+
+    @Override
+    public Flux<Product> findAll(int page, int size) {
+        int offset = page * size;
+        return productReactiveRepository.findAllByPage(offset, size)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Mono<Long> getTotalProduct() {
+        return productReactiveRepository.count();
     }
 }

@@ -12,4 +12,5 @@ public interface ProductMapper {
     ProductResponseDto toDto(Product model);
     ProductEntity toEntity(Product model);
     Product toDomain(ProductEntity entity);
+    Product fromDto(ProductResponseDto dto);
 }

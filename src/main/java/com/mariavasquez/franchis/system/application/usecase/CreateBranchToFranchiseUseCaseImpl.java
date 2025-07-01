@@ -40,19 +40,19 @@ public class CreateBranchToFranchiseUseCaseImpl implements CreateBranchToFranchi
                 .onErrorMap(e -> (e instanceof CustomException) ? e : new CustomException(ResponseCode.DATABASE_ERROR));
     }
 
-    private Mono<Void> validateNotExistsFranchise(Long id){
+    private Mono<Void> validateNotExistsFranchise(Long id) {
         return franchiseRepository.findById(id)
                 .hasElement()
-                .flatMap(exist ->{
-                    if (!exist) return Mono.error(new CustomException(ResponseCode.FRANCHISE_NOT_FOUND));
-                    return Mono.empty();
-                });
+                .flatMap(exist -> !Boolean.FALSE.equals(exist)
+                        ? Mono.error(new CustomException(ResponseCode.FRANCHISE_NOT_FOUND))
+                        : Mono.empty()
+                );
     }
 
-    private Mono<Void> validateExistsBranch(String name){
+    private Mono<Void> validateExistsBranch(String name) {
         return branchRepository.findByName(name)
                 .hasElement()
-                .flatMap(exist ->{
+                .flatMap(exist -> {
                     if (exist) return Mono.error(new CustomException(ResponseCode.BRANCH_EXIST, name));
                     return Mono.empty();
                 });

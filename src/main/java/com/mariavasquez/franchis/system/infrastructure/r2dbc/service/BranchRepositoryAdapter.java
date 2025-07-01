@@ -25,4 +25,9 @@ public class BranchRepositoryAdapter implements BranchRepository {
         return branchReactiveRepository.findByName(name)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Mono<Void> delete(Long id) {
+        return branchReactiveRepository.deleteById(id);
+    }
 }

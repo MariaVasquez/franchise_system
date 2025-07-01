@@ -25,4 +25,15 @@ public class BranchProductRepositoryAdapter implements BranchProductRepository {
         return branchProductReactiveRepository.findById(id)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Mono<BranchProduct> findByProdyctId(Long id) {
+        return branchProductReactiveRepository.findByProductId(id)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Mono<Void> delete(Long id) {
+        return branchProductReactiveRepository.deleteByProductId(id);
+    }
 }

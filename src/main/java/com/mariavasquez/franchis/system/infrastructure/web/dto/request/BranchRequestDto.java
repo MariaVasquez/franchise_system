@@ -14,15 +14,15 @@ public class BranchRequestDto {
 
     @NotBlank(message = "El nombre de la sucursal es obligatorio")
     @Size(max = 100, message = "El nombre no puede superar los 100 caracteres")
-    @Schema(description = "Nombre de la sucursal", example = "Sucursal Centro", required = true)
+    @Schema(description = "Nombre de la sucursal", example = "Sucursal Centro")
     private String name;
 
     @NotBlank(message = "La dirección es obligatoria")
     @Size(max = 200, message = "La dirección no puede superar los 200 caracteres")
-    @Schema(description = "Dirección de la sucursal", example = "Cra 45 #10-15, Medellín", required = true)
+    @Schema(description = "Dirección de la sucursal", example = "Cra 45 #10-15, Medellín")
     private String address;
 
     @NotNull(message = "El ID de la franquicia es obligatorio")
-    @Schema(description = "ID de la franquicia a la que pertenece esta sucursal", example = "1", required = true)
+    @Schema(description = "ID de la franquicia a la que pertenece esta sucursal", example = "1")
     private Long franchiseId;
 }

@@ -8,6 +8,8 @@ import com.mariavasquez.franchis.system.domain.model.Product;
 import com.mariavasquez.franchis.system.domain.port.BranchProductRepository;
 import com.mariavasquez.franchis.system.domain.port.BranchRepository;
 import com.mariavasquez.franchis.system.domain.port.ProductRepository;
+import com.mariavasquez.franchis.system.domain.port.RedisCacheService;
+import com.mariavasquez.franchis.system.infrastructure.cache.ProductCacheCleaner;
 import com.mariavasquez.franchis.system.infrastructure.web.dto.request.ProductRequestDto;
 import com.mariavasquez.franchis.system.infrastructure.web.dto.response.ProductResponseDto;
 import com.mariavasquez.franchis.system.shared.constants.ResponseCode;
@@ -16,9 +18,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +34,7 @@ public class CreateProductToBranchUseCaseImpl implements CreateProductToBranchUs
     private final BranchRepository branchRepository;
     private final BranchProductRepository branchProductRepository;
     private final ProductRepository productRepository;
+    private final ProductCacheCleaner productCacheCleaner;
 
     @Override
     @Transactional
@@ -39,8 +46,13 @@ public class CreateProductToBranchUseCaseImpl implements CreateProductToBranchUs
         return validateExistBranch(branchName)
                 .flatMap(branch -> {
                     Product product = buildProductFromDto(dto, branch.getFranchiseId());
-                    return saveProductAndAssignToBranch(product, branch.getId(), dto.getStock());
-                });
+                    return saveProductAndAssignToBranch(product, branch.getId(), dto.getStock())
+                            .flatMap(savedProduct ->
+                                    productCacheCleaner.deleteAllProductPages().thenReturn(savedProduct)
+                            );
+                })
+                .doOnError(e -> log.error("Error in create product {}", dto.getName(), e))
+                .onErrorMap(e -> (e instanceof CustomException) ? e : new CustomException(ResponseCode.DATABASE_ERROR));
     }
 
     private Product buildProductFromDto(ProductRequestDto dto, Long franchiseId) {
@@ -57,7 +69,6 @@ public class CreateProductToBranchUseCaseImpl implements CreateProductToBranchUs
     private Mono<ProductResponseDto> saveProductAndAssignToBranch(Product product, Long branchId, Integer stock) {
         return validateExistProduct(product.getName()).then(productRepository.save(product))
                 .flatMap(savedProduct -> {
-                    log.info(savedProduct.toString());
                     BranchProduct branchProduct = BranchProduct.builder()
                             .branchId(branchId)
                             .productId(savedProduct.getId())
@@ -82,13 +93,15 @@ public class CreateProductToBranchUseCaseImpl implements CreateProductToBranchUs
                 });
     }
 
-    private Mono<Product> validateExistProduct(String name){
-        return productRepository.findByName(name)
-                .hasElement()
-                .flatMap(exist -> {
-                    if (Boolean.TRUE.equals(exist)) return Mono.error(new CustomException(ResponseCode.PRODUCT_EXIST, name));
-                    return Mono.empty();
-                });
+    private Mono<Product> validateExistProduct(String name) {
+        return Mono.defer(() ->
+                productRepository.findByName(name)
+                        .hasElement()
+                        .flatMap(exists -> Boolean.TRUE.equals(exists)
+                                ? Mono.error(new CustomException(ResponseCode.PRODUCT_EXIST, name))
+                                : Mono.empty()
+                        )
+        );
     }
 
     private Mono<Branch> validateExistBranch(String branchName) {

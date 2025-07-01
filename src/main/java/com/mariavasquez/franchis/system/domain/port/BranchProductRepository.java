@@ -6,4 +6,6 @@ import reactor.core.publisher.Mono;
 public interface BranchProductRepository {
     Mono<BranchProduct> save(BranchProduct branchProduct);
     Mono<BranchProduct> findById(Long id);
+    Mono<BranchProduct> findByProdyctId(Long id);
+    Mono<Void> delete(Long id);
 }
